@@ -6,7 +6,7 @@ if (isset($_POST['column']) && isset($_POST['value'])) {
     $column = $_POST['column'];
     $value = $_POST['value'];
 
-    $sql = "DELETE FROM button_list WHERE `$column` = ?";
+    $sql = "DELETE FROM button_list WHERE $column = ?";
     $stmt = mysqli_prepare($con, $sql);
     
     if ($stmt === false) {

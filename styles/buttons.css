@@ -13,7 +13,7 @@
     margin: 0 auto;
     margin-top: 15px;
     max-height: 800px; /* Max height for scrolling */
-    overflow-y: auto; /* Enable vertical scrolling */
+    overflow-y: none; /* Enable vertical scrolling */
     margin-left: 15px;
 }
 
@@ -96,6 +96,12 @@ button[type="submit"]:hover {
 /* Hover effect for list items */
 #entries-list li:hover {
     background-color: #eaeaea;
+}
+
+#entries-list-container{
+    max-height: 560px;
+    max-width: 550px;
+    overflow-y: auto;
 }
 
 /* Styling for delete button */
@@ -210,4 +216,47 @@ button[type="submit"]:hover {
 /* Save all entries button hover effect */
 .save-all-entries-button:hover {
     background-color: #025aa5;
+}
+
+
+.modal {
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    text-align: center;
+    max-width: 90%;
+}
+
+.modal-contentb {
+    background-color: white;
+    padding: 20px;
+    border: 1px solid black;
+    width: 300px;
+    margin: auto;
+    position: fixed;
+    top: 20%;
+    left: 50%;
+    transform: translate(-50%, -20%);
+    z-index: 1000;
+}
+
+.close {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    cursor: pointer;
+    font-size: 24px;
 }

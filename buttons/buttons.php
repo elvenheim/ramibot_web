@@ -60,6 +60,14 @@
                                 <h3>Entries</h3>
                                 <ul id="entries-list">
                                 </ul>
+                                <div id="image-preview-modal" class="modal" style="display: none;">
+                                    <div class="modal-content">
+                                        <span id="close-preview-modal" class="close">&times;</span>
+                                        <div class="modal-body">
+                                            <!-- Image will be loaded here dynamically -->
+                                        </div>
+                                    </div>
+                                </div>
                                 <div id="new-entry-section" style="display: none;">
                                     <h4>Add New Entry</h4>
                                     <div>
@@ -168,12 +176,105 @@
 
             // Handle the Upload button click
             $(document).on('click', '.upload-btn', function() {
+                var entryValue = $(this).data('value'); // Get the button name (value)
                 var column = $(this).data('column');
-                var value = $(this).data('value');
+
+                // Create a file input element dynamically
+                var fileInput = $('<input type="file" accept="image/*">');
                 
-                // Add your upload functionality here, e.g., trigger a file upload dialog or redirect
-                alert('Uploading for ' + value + ' in column ' + column);
+                // Trigger the file input to open the file selection dialog
+                fileInput.trigger('click');
+
+                // Listen for file selection
+                fileInput.on('change', function(event) {
+                    var file = event.target.files[0]; // Get the selected file
+                    
+                    if (file) {
+                        // Check if an image with the same name already exists
+                        $.ajax({
+                            url: 'check_image.php', // Server-side script to check if the image exists
+                            type: 'POST',
+                            data: { image_name: entryValue }, // Send the image name (button name)
+                            success: function(response) {
+                                if (response === 'exists') {
+                                    // If the file exists, ask for confirmation to overwrite
+                                    if (confirm('An image with the same name already exists. Do you want to overwrite it?')) {
+                                        uploadFile(file, entryValue, column, true); // Overwrite the file
+                                    } else {
+                                        alert('Upload canceled.');
+                                    }
+                                } else {
+                                    // If the file doesn't exist, proceed to upload
+                                    uploadFile(file, entryValue, column, false); // Normal upload
+                                }
+                            },
+                            error: function(xhr, status, error) {
+                                alert('Error checking file: ' + xhr.responseText);
+                            }
+                        });
+                    } else {
+                        alert('No file selected.');
+                    }
+                });
             });
+
+            // Function to handle the file upload
+            function uploadFile(file, entryValue, column, overwrite) {
+                var formData = new FormData();
+                formData.append('file', file);
+                formData.append('image_name', entryValue);
+                formData.append('column', column);
+                formData.append('overwrite', overwrite); // Send overwrite flag to the server
+
+                $.ajax({
+                    url: 'upload_image.php', // Upload to the server
+                    type: 'POST',
+                    data: formData,
+                    processData: false, // Prevent jQuery from processing the formData
+                    contentType: false, // Prevent jQuery from setting content-type header
+                    success: function(response) {
+                        alert(response); // Display success or error message
+                    },
+                    error: function(xhr, status, error) {
+                        alert('Error uploading file: ' + xhr.responseText);
+                    }
+                });
+            }
+
+            // Handle the Preview button click
+            $(document).on('click', '.preview-btn', function() {
+                var entryValue = $(this).data('value'); // Get the entry value
+
+                $.ajax({
+                    type: 'POST',
+                    url: 'preview_image.php',
+                    data: { image_name: entryValue },
+                    success: function(response) {
+                        console.log(response);  // Log the response to see what is returned
+                        var result = JSON.parse(response);
+
+                        if (result.status === 'success') {
+                            // If image exists, preview the image in a modal
+                            var imageUrl = result.image_path;
+                            var previewHtml = '<img src="' + imageUrl + '" alt="Preview Image" style="max-width: 100%; height: auto;">';
+                            $('#image-preview-modal .modal-body').html(previewHtml);
+                            $('#image-preview-modal').show(); // Show the modal
+                        } else {
+                            // If no image, show the error message
+                            alert(result.message);
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.log('Error: ', xhr.responseText);  // Log the error for debugging
+                        alert('Error checking image: ' + xhr.responseText);
+                    }
+                });
+            });
+            // Close modal logic
+            $('#close-preview-modal').click(function() {
+                $('#image-preview-modal').hide();
+            });
+
         });
     </script>
 

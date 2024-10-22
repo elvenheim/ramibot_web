@@ -135,7 +135,7 @@ button[type="submit"]:hover {
     color: white;
     padding: 4px 8px;
     border: none;
-    border-radius: 4px;
+    border-radius: 4px;     
     cursor: pointer;
     font-size: 0.8rem; /* Compact font size */
     transition: background-color 0.2s ease;
@@ -251,6 +251,12 @@ button[type="submit"]:hover {
     left: 50%;
     transform: translate(-50%, -20%);
     z-index: 1000;
+}
+
+.modal-body {
+    max-width: 1000px;
+    max-height: 1200px;
+    align-items: center;
 }
 
 .close {

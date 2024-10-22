@@ -30,15 +30,8 @@ function isActivePage($page) {
 // HTML for buttons
 $buttons = [
     ['path' => '../super_admin/manage_users.php', 'label' => 'Manage Users'],
-    ['path' => '../facultysched/faculty_schedule.php', 'label' => 'Faculty Schedule'],
-    ['path' => '../programs/programs_offered.php', 'label' => 'Programs Offered'],
-    ['path' => '../floors/floors.php', 'label' => 'Floors'],
-    ['path' => '../offices/office_hours.php', 'label' => 'Office Hours'],
-    ['path' => '../announcements/about.php', 'label' => 'About APC'],
+    ['path' => '../view_images/image_page.php', 'label' => 'Images'],
     ['path' => '../status/rami_status.php', 'label' => 'Status'],
-    ['path' => '../calendars/calendars.php', 'label' => 'Calendar'],
-    ['path' => '../tuition/tuition.php', 'label' => 'Tuition'],
-    ['path' => '../accreditations/accreditations.php', 'label' => 'Accreditations'],
     ['path' => 'http://192.168.80.4:5050', 'label' => 'Ramibot Response'],
     ['path' => '../buttons/buttons.php', 'label' => 'Button Lists'],
 

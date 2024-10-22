@@ -1,0 +1,91 @@
+.upload-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center; 
+    margin-top: 15px;
+    width: 100%;
+    height: auto; /* Adjust height to auto to fit all contents */
+    background-color: rgb(253, 253, 253);
+    padding: 10px; /* Added padding for better spacing */
+    box-sizing: border-box; /* Ensure padding and border are included in width and height */
+}
+
+.image-container {
+    background-color: #33415c;
+    width: 98%;
+    margin-left: 10px;
+    margin-top: 20px;
+    border-radius: 5px;
+}
+
+.image-gallery-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.image-gallery-container .image-item {
+    flex-basis: calc(33.333% - 10px); /* 3 images per row */
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.image-gallery-container img {
+    max-width: 100%;
+    height: auto;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    padding: 5px;
+}
+
+.image-gallery-container p.file-name {
+    margin: 10px 0 5px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+
+.image-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.image-item {
+    flex: 1 1 calc(33.33% - 20px);
+    max-width: calc(33.33% - 20px);
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column; /* Stack the file name and image vertically */
+    align-items: center; /* Center the image and file name */
+    text-align: center; /* Ensure text is centered */
+}
+
+.file-name {
+    margin-bottom: 5px; /* Space between the file name and the image */
+    font-size: 14px;
+    color: #ffff; /* Change to match your design */
+    font-weight: bold;
+}
+
+.image-item img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+@media (max-width: 768px) {
+    .image-item {
+        flex: 1 1 calc(50% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+    .image-item {
+        flex: 1 1 100%;
+    }
+}

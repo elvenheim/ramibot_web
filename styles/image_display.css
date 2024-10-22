@@ -10,12 +10,51 @@
     box-sizing: border-box; /* Ensure padding and border are included in width and height */
 }
 
+/* Label for the dropdown */
+.category-selector label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #000000;
+    width: 150px;
+}
+
+/* Style for the dropdown itself */
+.category-selector select {
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #f9f9f9;
+    color: #000000;
+    transition: border-color 0.3s ease;
+}
+
+/* Hover effect for the dropdown */
+.category-selector select:hover {
+    border-color: #007bff; /* Adjust this to match your theme's primary color */
+}
+
+/* Focus effect for the dropdown */
+.category-selector select:focus {
+    outline: none;
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /* Optional for a glow effect */
+}
+
+/* Optional: Style for the dropdown options */
+.category-selector select option {
+    padding: 8px;
+    font-size: 14px;
+}
+
+
 .image-container {
     background-color: #33415c;
     width: 98%;
     margin-left: 10px;
     margin-top: 20px;
     border-radius: 5px;
+    overflow-y: auto;
 }
 
 .image-gallery-container {
@@ -27,6 +66,7 @@
 .image-gallery-container .image-item {
     flex-basis: calc(33.333% - 10px); /* 3 images per row */
     margin-bottom: 20px;
+    margin-right: 10px;
     text-align: center;
 }
 
@@ -48,7 +88,6 @@
 .image-gallery {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
     gap: 10px;
     margin-top: 20px;
 }
@@ -77,6 +116,20 @@
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
+
+.delete-image {
+    margin-top: 10px;
+    background-color: #ff4d4d;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.delete-image:hover {
+    background-color: #ff3333;
+}
+
 
 @media (max-width: 768px) {
     .image-item {

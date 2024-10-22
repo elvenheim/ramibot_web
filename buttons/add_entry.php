@@ -45,7 +45,7 @@ if (isset($_POST['column']) && isset($_POST['value'])) {
 
     if ($stmt->execute()) {
         echo "Entry added successfully!";
-        add_user_log($_SESSION['user_id'], "Added entry '" . $value . "' to column '" . $column . "'");
+        add_user_log($_SESSION['user_id'], "Added button '" . $value . "' to column '" . $column . "'");
     } else {
         echo "Execute failed: " . $stmt->error;
     }

@@ -78,27 +78,47 @@
         </div> 
     </div> 
 
-    <!-- JavaScript to handle dropdown change and AJAX --> 
-    <script> 
-        $(document).ready(function() { 
-            $('#category').change(function() { 
-                var selectedColumn = $(this).val(); 
+        <script>
+        $(document).ready(function() {
+            $('#category').change(function() {
+                var selectedColumn = $(this).val();
 
-                if (selectedColumn) { 
-                    $.ajax({ 
-                        url: 'fetch_images.php', // Backend script to fetch images 
-                        type: 'POST', 
-                        data: { column: selectedColumn }, 
-                        success: function(response) { 
-                            $('#imagesDisplay').html(response); // Display the images here 
-                        } 
-                    }); 
-                } else { 
-                    $('#imagesDisplay').html(''); // Clear images if no column is selected 
-                } 
-            }); 
-        }); 
-    </script> 
+                if (selectedColumn) {
+                    $.ajax({
+                        url: 'fetch_images.php', // Backend script to fetch images
+                        type: 'POST',
+                        data: { column: selectedColumn },
+                        success: function(response) {
+                            $('#imagesDisplay').html(response); // Display the images here
+
+                            // Attach event handler for delete buttons
+                            $('.delete-image').click(function() {
+                                var column = $(this).data('column');
+                                var file = $(this).data('file');
+
+                                if (confirm('Are you sure you want to delete this image?')) {
+                                    $.ajax({
+                                        url: 'delete_image.php',
+                                        type: 'POST',
+                                        data: { column: column, file: file },
+                                        success: function(deleteResponse) {
+                                            alert(deleteResponse); // Show response (Image deleted or error)
+
+                                            // Reload the image gallery
+                                            $('#category').trigger('change');
+                                        }
+                                    });
+                                }
+                            });
+                        }
+                    });
+                } else {
+                    $('#imagesDisplay').html(''); // Clear images if no column is selected
+                }
+            });
+        });
+    </script>
+
 </body> 
 
 </html>

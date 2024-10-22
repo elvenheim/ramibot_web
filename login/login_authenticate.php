@@ -1,4 +1,5 @@
 <?php
+    session_start();
     require_once('../database_connect.php');
     require_once('../scripts/user_logs.php');
 

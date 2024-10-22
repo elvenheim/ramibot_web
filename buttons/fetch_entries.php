@@ -23,7 +23,7 @@ if (isset($_POST['category']) && !empty($_POST['category'])) {
                 echo "<div class='text-content'>$entryValue</div>";
                 echo "<div class='button-group'>";
                 echo "<button type='button' class='delete-btn' data-column='$selectedColumn' data-value='$entryValue'>Delete</button>";                
-                echo "<button type='button' class='upload-btn' data-column='$selectedColumn' data-value='$entryValue'>Upload</button>";
+                echo "<button type='button' class='upload-btn' data-column='$selectedColumn' data-value='$entryValue'>Upload Image</button>";
                 echo "<button type='button' class='preview-btn' data-column='$selectedColumn' data-value='$entryValue'>Preview</button>";
                 echo "</div>";
                 echo "</li>";

@@ -14,24 +14,46 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         $role = $_POST['roleInput'];
         $user_status = $_POST['statusInput']; // Assuming 1 for enabled, 0 for disabled
 
-        $sql = "INSERT INTO admin_accounts (email, username, password, role, user_status) VALUES (?, ?, ?, ?, ?)";
-        $stmt = $con->prepare($sql);
+        // Check if the email already exists
+        $checkEmailSQL = "SELECT COUNT(*) AS count FROM admin_accounts WHERE email = ?";
+        $checkStmt = $con->prepare($checkEmailSQL);
         
-        if ($stmt) {
-            $stmt->bind_param("ssssi", $email, $username, $password, $role, $user_status);
+        if ($checkStmt) {
+            $checkStmt->bind_param("s", $email);
+            $checkStmt->execute();
+            $result = $checkStmt->get_result();
+            $row = $result->fetch_assoc();
 
-            if ($stmt->execute()) {
-                echo "User added successfully.";
-                echo '<br><button onclick="goBack()">Okay</button>';
+            if ($row['count'] > 0) {
+                // Email already exists
+                echo "Error: A user with this email already exists.";
+                echo '<br><button onclick="goBack()">Go Back</button>';
                 echo '<script>function goBack() { window.history.back(); }</script>';
-                add_user_log($_SESSION['user_id'], "Added user '" . $username . "'" . " with role '" . $role . "'");  
+                $checkStmt->close();
             } else {
-                echo "Error: " . $stmt->error;
-            }
+                // Proceed with adding the user if the email is unique
+                $sql = "INSERT INTO admin_accounts (email, username, password, role, user_status) VALUES (?, ?, ?, ?, ?)";
+                $stmt = $con->prepare($sql);
+                
+                if ($stmt) {
+                    $stmt->bind_param("ssssi", $email, $username, $password, $role, $user_status);
 
-            $stmt->close();
+                    if ($stmt->execute()) {
+                        echo "User added successfully.";
+                        echo '<br><button onclick="goBack()">Okay</button>';
+                        echo '<script>function goBack() { window.history.back(); }</script>';
+                        add_user_log($_SESSION['user_id'], "Added user '" . $username . "'" . " with role '" . $role . "'");  
+                    } else {
+                        echo "Error: " . $stmt->error;
+                    }
+
+                    $stmt->close();
+                } else {
+                    echo "Error preparing statement: " . $con->error;
+                }
+            }
         } else {
-            echo "Error preparing statement: " . $con->error;
+            echo "Error preparing email check statement: " . $con->error;
         }
     } else {
         echo "Error: Missing required fields.";

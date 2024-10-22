@@ -31,14 +31,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['column'])) {
         while ($row = $result->fetch_assoc()) {
             $value = $row[$column];
 
-            // Construct the image filename (Assuming the image files follow a pattern based on the column values)
-            $img_url = "../RamiAPI/Images/$value.png"; // Example: image files stored in the 'uploads' folder with .jpg extension
+            // Construct the image filename
+            $img_url = "../RamiAPI/Images/$value.png";
 
             // Check if the image file exists
             if (file_exists($img_url)) {
                 echo "<div class='image-item'>";
                 echo "<p class='file-name'>$value.png</p>"; // Display the file name above the image
                 echo "<img src='$img_url' alt='$value'>";
+
+                // Add a delete button for the image
+                echo "<button class='delete-image' data-column='$column' data-file='$value'>Delete</button>";
+
                 echo "</div>";
             } else {
                 echo "<div class='image-item'>";
@@ -54,5 +58,3 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['column'])) {
     }
 }
 ?>
-
-
